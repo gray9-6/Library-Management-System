@@ -6,5 +6,6 @@ public class Messages {
     public static final String UPDATED = "updated";
     public static final String SOMETHING_WENT_WRONG = "Something went Wrong !!";
     public static final String DELETED_SUCCESSFULLY = "Deleted Successfully";
+    public static final String BOOK_NOT_FOUND = "Book Not Found";
 
 }
