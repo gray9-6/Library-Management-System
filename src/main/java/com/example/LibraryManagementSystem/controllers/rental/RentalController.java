@@ -74,9 +74,7 @@ public class RentalController {
             List<RentBookResponseDto> rentBookResponseDtoList = rentalService.getOverdueRentals();
             return new ResponseEntity<>(rentBookResponseDtoList,HttpStatus.OK);
         }catch (Exception e){
-            logger.info(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 }

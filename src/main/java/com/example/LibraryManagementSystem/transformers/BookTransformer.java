@@ -9,7 +9,6 @@ public class BookTransformer {
     public static Book bookRequestDtoToBook(BookRequestDto bookRequestDto){
         return Book.builder()
                 .title(bookRequestDto.getTitle())
-                .isbn(bookRequestDto.getIsbn())
                 .publicationYear(bookRequestDto.getPublicationYear())
                 .build();
     }

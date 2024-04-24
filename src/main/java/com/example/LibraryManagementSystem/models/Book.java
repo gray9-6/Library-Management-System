@@ -1,9 +1,11 @@
 package com.example.LibraryManagementSystem.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
 
 
 @Entity
@@ -21,6 +23,7 @@ public class Book {
 
     String title;
 
+    @Column(nullable = false, length = 13, unique = true)
     String isbn;
 
     int publicationYear;

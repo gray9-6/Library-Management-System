@@ -1,6 +1,5 @@
 package com.example.LibraryManagementSystem.controllers.book;
 
-import com.example.LibraryManagementSystem.controllers.rental.RentalController;
 import com.example.LibraryManagementSystem.dtos.book.BookRequestDto;
 import com.example.LibraryManagementSystem.dtos.book.BookResponseDto;
 import com.example.LibraryManagementSystem.services.book.BookService;

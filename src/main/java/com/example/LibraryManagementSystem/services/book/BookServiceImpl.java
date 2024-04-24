@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 
@@ -38,6 +39,8 @@ public class BookServiceImpl implements BookService{
         Book createdBook = BookTransformer.bookRequestDtoToBook(bookRequestDto);
         Author author = authorRepository.findById(bookRequestDto.getAuthorId()).orElseThrow(() -> new UsernameNotFoundException("Author Not found Exception"));
         createdBook.setAuthor(author);
+        String isbn = String.valueOf(UUID.randomUUID()).substring(0,13);
+        createdBook.setIsbn(isbn);
 
         // save the book in db
         Book savedBook = bookRepository.save(createdBook);
@@ -66,7 +69,6 @@ public class BookServiceImpl implements BookService{
 
            // update the changed fields
            book.setTitle(bookRequestDto.getTitle());
-           book.setIsbn(bookRequestDto.getIsbn());
            book.setPublicationYear(bookRequestDto.getPublicationYear());
            if(bookRequestDto.getAuthorId() != null){  // change the author
                // check if the author exists or not
@@ -83,6 +85,8 @@ public class BookServiceImpl implements BookService{
                // now changed the author as well
                book.setAuthor(newAuthor);
            }
+
+
            bookRepository.save(book);  // and then save the book
            return Messages.UPDATED;
        }catch (Exception e){

@@ -11,8 +11,8 @@ import java.util.Date;
 public class RentTransformer {
 
     public static Rental bookRentRequestDtoToRent(RentBookRequestDto rentBookRequestDto){
-        LocalDate rentalDate = rentBookRequestDto.getRentalDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        Date returnDate = Date.from(rentalDate.plusDays(14).atStartOfDay(ZoneId.systemDefault()).toInstant());
+//        LocalDate rentalDate = rentBookRequestDto.getRentalDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        Date returnDate = Date.from(LocalDate.now().plusDays(14).atStartOfDay(ZoneId.systemDefault()).toInstant());
         return Rental.builder()
                 .renterName(rentBookRequestDto.getRenterName())
                 .rentalDate(rentBookRequestDto.getRentalDate())

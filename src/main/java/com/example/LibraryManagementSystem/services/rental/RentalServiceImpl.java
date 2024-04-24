@@ -134,8 +134,9 @@ public class RentalServiceImpl implements RentalService{
         List<RentBookResponseDto> rentBookResponseDtoList = new ArrayList<>();
         for (Rental rental:rentalList) {
             LocalDate currentDate = LocalDate.now();
-            LocalDate rentalDate = rental.getRentalDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            if(currentDate.isAfter(rentalDate.plusDays(14)) && rental.getBook() != null){
+            LocalDate returnDate = rental.getReturnDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+            if(currentDate.isAfter(returnDate) && rental.getBook() != null){
                 RentBookResponseDto rentBookResponseDto = RentTransformer.rentToBookRentResponseDto(rental);
                 BookResponseDto bookResponseDto = BookTransformer.bookToBookResponseDto(rental.getBook());
                 rentBookResponseDto.setBookResponseDto(bookResponseDto);

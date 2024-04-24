@@ -1,8 +1,10 @@
 package com.example.LibraryManagementSystem.models;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
 
@@ -25,6 +27,7 @@ public class Rental {
     String renterName;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @CreationTimestamp
     Date rentalDate;
 
     @Temporal(TemporalType.TIMESTAMP)
