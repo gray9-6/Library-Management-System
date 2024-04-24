@@ -21,11 +21,13 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
+    @NonNull
     String title;
 
     @Column(nullable = false, length = 13, unique = true)
     String isbn;
 
+    @NonNull
     int publicationYear;
 
     @ManyToOne(fetch = FetchType.LAZY)

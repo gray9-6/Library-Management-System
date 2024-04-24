@@ -24,6 +24,7 @@ public class Rental {
     @OneToOne(mappedBy = "rental",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     Book book;
 
+    @NonNull
     String renterName;
 
     @Temporal(TemporalType.TIMESTAMP)
