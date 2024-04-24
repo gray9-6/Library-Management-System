@@ -3,6 +3,7 @@ package com.example.LibraryManagementSystem.controllers.rental;
 import com.example.LibraryManagementSystem.dtos.rental.RentBookRequestDto;
 import com.example.LibraryManagementSystem.dtos.rental.RentBookResponseDto;
 import com.example.LibraryManagementSystem.services.rental.RentalService;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class RentalController {
     RentalService rentalService;
 
     @PostMapping("/book")
-    public ResponseEntity<RentBookResponseDto> createRentRecord(@RequestBody RentBookRequestDto rentBookRequestDto){
+    public ResponseEntity<RentBookResponseDto> createRentRecord(@RequestBody @Valid RentBookRequestDto rentBookRequestDto){
         try {
             RentBookResponseDto rentBookResponseDto = rentalService.createRentRecord(rentBookRequestDto);
             return new ResponseEntity<>(rentBookResponseDto, HttpStatus.OK);

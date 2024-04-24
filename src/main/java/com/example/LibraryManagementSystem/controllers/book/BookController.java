@@ -3,6 +3,7 @@ package com.example.LibraryManagementSystem.controllers.book;
 import com.example.LibraryManagementSystem.dtos.book.BookRequestDto;
 import com.example.LibraryManagementSystem.dtos.book.BookResponseDto;
 import com.example.LibraryManagementSystem.services.book.BookService;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class BookController {
 
 
     @PostMapping("/create")
-    public ResponseEntity<?> createBook(@RequestBody BookRequestDto bookRequestDto){
+    public ResponseEntity<?> createBook(@RequestBody @Valid BookRequestDto bookRequestDto){
         try {
             BookResponseDto savedBook = bookService.createBook(bookRequestDto);
             return new ResponseEntity<>(savedBook, HttpStatus.CREATED);

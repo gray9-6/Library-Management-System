@@ -2,6 +2,7 @@ package com.example.LibraryManagementSystem.models;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
@@ -24,7 +25,7 @@ public class Rental {
     @OneToOne(mappedBy = "rental",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     Book book;
 
-    @NonNull
+    @NotBlank(message = "Renter name is Mandatory")
     String renterName;
 
     @Temporal(TemporalType.TIMESTAMP)

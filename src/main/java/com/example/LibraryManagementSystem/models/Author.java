@@ -1,6 +1,7 @@
 package com.example.LibraryManagementSystem.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -20,10 +21,10 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @NonNull
+    @NotBlank(message = "Name is Mandatory")
     String name;
 
-    @NonNull
+    @NotBlank(message = "Biography is Mandatory")
     String biography;
 
     @OneToMany(mappedBy = "author",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
