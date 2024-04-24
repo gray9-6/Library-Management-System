@@ -19,8 +19,7 @@ public class Rental {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "book_id")
+    @OneToOne(mappedBy = "rental",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     Book book;
 
     String renterName;
@@ -30,4 +29,5 @@ public class Rental {
 
     @Temporal(TemporalType.TIMESTAMP)
     Date returnDate;
+
 }

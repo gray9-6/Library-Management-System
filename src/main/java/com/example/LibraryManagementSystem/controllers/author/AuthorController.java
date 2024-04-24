@@ -2,7 +2,7 @@ package com.example.LibraryManagementSystem.controllers.author;
 
 import com.example.LibraryManagementSystem.dtos.author.AuthorRequestDto;
 import com.example.LibraryManagementSystem.dtos.author.AuthorResponseDto;
-import com.example.LibraryManagementSystem.services.auhtor.AuthorService;
+import com.example.LibraryManagementSystem.services.author.AuthorService;
 import com.example.LibraryManagementSystem.utils.Messages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

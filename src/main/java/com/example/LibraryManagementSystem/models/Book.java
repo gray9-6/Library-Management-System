@@ -21,12 +21,17 @@ public class Book {
 
     String title;
 
+    String isbn;
+
+    int publicationYear;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id")
     @JsonIgnore
     Author author;
 
-    String isbn;
-
-    int publicationYear;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rental_id")
+    @JsonIgnore
+    Rental rental;
 }

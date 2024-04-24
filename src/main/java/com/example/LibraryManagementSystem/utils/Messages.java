@@ -7,5 +7,7 @@ public class Messages {
     public static final String SOMETHING_WENT_WRONG = "Something went Wrong !!";
     public static final String DELETED_SUCCESSFULLY = "Deleted Successfully";
     public static final String BOOK_NOT_FOUND = "Book Not Found";
+    public static final String BOOK_ALREADY_RENTED = "Book is already Rented";
+    public static final String BOOK_NOT_RENTED = "Book is Not Rented";
 
 }

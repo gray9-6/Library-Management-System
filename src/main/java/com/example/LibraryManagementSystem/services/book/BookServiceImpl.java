@@ -8,14 +8,16 @@ import com.example.LibraryManagementSystem.models.Author;
 import com.example.LibraryManagementSystem.models.Book;
 import com.example.LibraryManagementSystem.repository.AuthorRepository;
 import com.example.LibraryManagementSystem.repository.BookRepository;
+import com.example.LibraryManagementSystem.services.rental.RentalServiceImpl;
 import com.example.LibraryManagementSystem.transformers.BookTransformer;
 import com.example.LibraryManagementSystem.utils.Messages;
-import io.micrometer.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -27,6 +29,9 @@ public class BookServiceImpl implements BookService{
 
     @Autowired
     AuthorRepository authorRepository;
+
+    @Autowired
+    RentalServiceImpl rentalService;
 
     public BookResponseDto createBook(BookRequestDto bookRequestDto){
         // convert the RequestDto to Entity
@@ -106,4 +111,49 @@ public class BookServiceImpl implements BookService{
             return e.getMessage();
         }
     }
+
+    public List<BookResponseDto> getBooksAvailableForRent(){
+        Set<Long> booksOnRent = rentalService.retrieveAllRentalRecords().stream().map(rentBookResponseDto -> rentBookResponseDto.getBookResponseDto().getId()).collect(Collectors.toSet());
+        List<Book> bookList =  bookRepository.findAll();
+
+        List<BookResponseDto> bookResponseDtoList = new ArrayList<>();
+        for (Book book:bookList) {
+            if(!booksOnRent.contains(book.getId())){
+                BookResponseDto bookResponseDto = BookTransformer.bookToBookResponseDto(book);
+                bookResponseDtoList.add(bookResponseDto);
+            }
+        }
+
+        return bookResponseDtoList;
+    }
+
+    public List<BookResponseDto> getAllRentedBooks(){
+        Set<Long> booksOnRent = rentalService.retrieveAllRentalRecords().stream().map(rentBookResponseDto -> rentBookResponseDto.getBookResponseDto().getId()).collect(Collectors.toSet());
+        List<Book> bookList =  bookRepository.findAll();
+
+        List<BookResponseDto> bookResponseDtoList = new ArrayList<>();
+        for (Book book:bookList) {
+            if(booksOnRent.contains(book.getId())){
+                BookResponseDto bookResponseDto = BookTransformer.bookToBookResponseDto(book);
+                bookResponseDtoList.add(bookResponseDto);
+            }
+        }
+
+        return bookResponseDtoList;
+    }
+
+    public List<BookResponseDto> getBooksByAuthor(String authorName){
+        List<Book> bookList =  bookRepository.findAll();
+        List<BookResponseDto> bookResponseDtoList = new ArrayList<>();
+        for (Book book:bookList) {
+            if(book.getAuthor().getName().equals(authorName)){
+                BookResponseDto bookResponseDto = BookTransformer.bookToBookResponseDto(book);
+                bookResponseDtoList.add(bookResponseDto);
+            }
+        }
+
+        return bookResponseDtoList;
+    }
+
+
 }

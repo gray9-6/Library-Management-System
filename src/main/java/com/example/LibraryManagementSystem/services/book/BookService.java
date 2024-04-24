@@ -12,5 +12,8 @@ public interface BookService {
     List<BookResponseDto> getAllBooks();
     String updateBookById(Long bookId,BookRequestDto bookRequestDto);
     String deleteBookById(Long bookId);
+    List<BookResponseDto> getBooksAvailableForRent();
+    List<BookResponseDto> getAllRentedBooks();
+    List<BookResponseDto> getBooksByAuthor(String authorName);
 
 }

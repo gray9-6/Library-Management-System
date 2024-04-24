@@ -1,8 +1,7 @@
-package com.example.LibraryManagementSystem.services.auhtor;
+package com.example.LibraryManagementSystem.services.author;
 
 import com.example.LibraryManagementSystem.dtos.author.AuthorRequestDto;
 import com.example.LibraryManagementSystem.dtos.author.AuthorResponseDto;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.example.LibraryManagementSystem.services.auhtor;
+package com.example.LibraryManagementSystem.services.author;
 
 import com.example.LibraryManagementSystem.dtos.author.AuthorRequestDto;
 import com.example.LibraryManagementSystem.dtos.author.AuthorResponseDto;
@@ -8,10 +8,8 @@ import com.example.LibraryManagementSystem.repository.AuthorRepository;
 import com.example.LibraryManagementSystem.transformers.AuthorTransformer;
 import com.example.LibraryManagementSystem.utils.Messages;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
