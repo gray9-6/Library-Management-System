@@ -33,10 +33,19 @@ The Library Management System offers a comprehensive solution for libraries or e
   
 - **Update Author By Id**: `/api/author/updateById/{id}` [PUT]
   - Updates author information by its ID.
+    ![image](https://github.com/gray9-6/Library-Management-System/assets/123147364/ca33e0e8-b65d-4b8d-bf79-4d9b6b6a2648)
+
+    
+
 - **Get Author By Id**: `/api/author/getById/{id}` [GET]
   - Retrieves author information by its ID.
+    ![image](https://github.com/gray9-6/Library-Management-System/assets/123147364/be153320-9b37-4524-ae5a-a790348fd1e7)
+
+    
 - **Delete Author By Id**: `/api/author/deleteById/{id}` [DELETE]
   - Deletes an author by its ID.
+    ![image](https://github.com/gray9-6/Library-Management-System/assets/123147364/9c247fc8-1be0-48f1-a464-1dffec7b4502)
+
 
 ### Book
 
