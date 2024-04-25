@@ -27,6 +27,10 @@ The Library Management System offers a comprehensive solution for libraries or e
     
 - **Get All Authors**: `/api/author/getAll` [GET]
   - Retrieves information about all authors.
+    ![image](https://github.com/gray9-6/Library-Management-System/assets/123147364/40a7fb98-7297-4958-9111-5c9ed69a5397)
+
+ 
+  
 - **Update Author By Id**: `/api/author/updateById/{id}` [PUT]
   - Updates author information by its ID.
 - **Get Author By Id**: `/api/author/getById/{id}` [GET]
