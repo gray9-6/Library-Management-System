@@ -20,6 +20,8 @@ The Library Management System offers a comprehensive solution for libraries or e
 ### Author
 
 - **Create Author**: `/api/author/create` [POST]
+- ![image](https://github.com/gray9-6/Library-Management-System/assets/123147364/db905ed2-7b7d-4b54-9e82-7889c07b767f)
+
   - Creates a new author.
 - **Get All Authors**: `/api/author/getAll` [GET]
   - Retrieves information about all authors.
