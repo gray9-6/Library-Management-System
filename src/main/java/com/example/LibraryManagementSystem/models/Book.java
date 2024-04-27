@@ -29,16 +29,13 @@ public class Book {
     @NotBlank(message = "isbn is Mandatory")
     String isbn;
 
-    @NotBlank(message = "Publication Year is Mandatory")
+    @Column(nullable = false)
     int publicationYear;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id")
-    @JsonIgnore
     Author author;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "rental_id")
-    @JsonIgnore
     Rental rental;
 }

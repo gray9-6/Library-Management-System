@@ -23,7 +23,7 @@ public class Rental {
     Long id;
 
     @OneToOne(mappedBy = "rental",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    Book book;
+    Book book;       // this book is managing the relation
 
     @NotBlank(message = "Renter name is Mandatory")
     String renterName;
