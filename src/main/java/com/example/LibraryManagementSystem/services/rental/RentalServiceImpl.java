@@ -22,6 +22,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,6 +37,9 @@ public class RentalServiceImpl implements RentalService{
 
     public RentBookResponseDto createRentRecord(RentBookRequestDto rentBookRequestDto) {
         try {
+            // Extract the rental object from the request DTO
+            Rental rentBook = RentTransformer.bookRentRequestDtoToRent(rentBookRequestDto);
+
             // Retrieve the book from the repository
             Book book = bookRepository.findById(rentBookRequestDto.getBookId())
                     .orElseThrow(() -> new BookNotFoundException(Messages.BOOK_NOT_FOUND));
@@ -44,13 +48,14 @@ public class RentalServiceImpl implements RentalService{
             if (book.getRental() != null) {
                 throw new BookRentedException(Messages.BOOK_ALREADY_RENTED);
             }
-
-            // Extract the rental object from the request DTO
-            Rental rentBook = RentTransformer.bookRentRequestDtoToRent(rentBookRequestDto);
             rentBook.setBook(book);
 
             // Save the rental object
             Rental savedRentRecord = rentalRepository.save(rentBook);
+
+            // set the rental in book also
+            book.setRental(savedRentRecord);
+            bookRepository.save(book);
 
 
             // Prepare the response DTO from the saved rent object
@@ -70,15 +75,20 @@ public class RentalServiceImpl implements RentalService{
     public List<RentBookResponseDto> retrieveAllRentalRecords(){
         List<Rental> rentals = rentalRepository.findAll();
 
-        return rentals.stream()
-                .map(rental -> {
-                    RentBookResponseDto rentBookResponseDto = RentTransformer.rentToBookRentResponseDto(rental);
-                    BookResponseDto bookResponseDto = BookTransformer.bookToBookResponseDto(rental.getBook());
-                    rentBookResponseDto.setBookResponseDto(bookResponseDto);
-                    return rentBookResponseDto;
-                })
-                .collect(Collectors.toList());
+        List<RentBookResponseDto> rentBookResponseDtoList = new ArrayList<>();
+        for (Rental rental:rentals) {
+            Optional<Book> optionalBook = Optional.ofNullable(rental.getBook());
+            if(optionalBook.isPresent()){
+                RentBookResponseDto rentBookResponseDto = RentTransformer.rentToBookRentResponseDto(rental);
+                BookResponseDto bookResponseDto = BookTransformer.bookToBookResponseDto(rental.getBook());
+                rentBookResponseDto.setBookResponseDto(bookResponseDto);
 
+                rentBookResponseDtoList.add(rentBookResponseDto);
+            }
+
+        }
+
+        return rentBookResponseDtoList;
     }
 
     public List<RentBookResponseDto> retrieveRentalRecordsByAuthorName(String authorName){

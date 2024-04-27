@@ -6,6 +6,7 @@ import com.example.LibraryManagementSystem.exception.AuthorNotFoundException;
 import com.example.LibraryManagementSystem.exception.BookNotFoundException;
 import com.example.LibraryManagementSystem.models.Author;
 import com.example.LibraryManagementSystem.models.Book;
+import com.example.LibraryManagementSystem.models.Rental;
 import com.example.LibraryManagementSystem.repository.AuthorRepository;
 import com.example.LibraryManagementSystem.repository.BookRepository;
 import com.example.LibraryManagementSystem.services.rental.RentalServiceImpl;
@@ -15,10 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -39,9 +37,10 @@ public class BookServiceImpl implements BookService{
 
         // convert the RequestDto to Entity
         Book createdBook = BookTransformer.bookRequestDtoToBook(bookRequestDto);
-        createdBook.setAuthor(author);
         String isbn = String.valueOf(UUID.randomUUID()).substring(0,13);
         createdBook.setIsbn(isbn);
+        createdBook.setAuthor(author);
+
 
         // save the book in db
         Book savedBook = bookRepository.save(createdBook);
@@ -129,12 +128,12 @@ public class BookServiceImpl implements BookService{
     }
 
     public List<BookResponseDto> getAllRentedBooks(){
-        Set<Long> booksOnRent = rentalService.retrieveAllRentalRecords().stream().map(rentBookResponseDto -> rentBookResponseDto.getBookResponseDto().getId()).collect(Collectors.toSet());
         List<Book> bookList =  bookRepository.findAll();
 
         List<BookResponseDto> bookResponseDtoList = new ArrayList<>();
         for (Book book:bookList) {
-            if(booksOnRent.contains(book.getId())){
+            Optional<Rental> optionalRental = Optional.ofNullable(book.getRental());
+            if(optionalRental.isPresent()){
                 BookResponseDto bookResponseDto = BookTransformer.bookToBookResponseDto(book);
                 bookResponseDtoList.add(bookResponseDto);
             }
