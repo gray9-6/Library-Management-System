@@ -4,6 +4,9 @@
 
 This Library Management System is a web application developed to efficiently manage library resources, including books, authors, and rental records. It provides a range of APIs to perform various operations such as creating, updating, deleting, and retrieving information related to books, authors, and rentals. Additionally, the system features user authentication using JSON Web Tokens (JWT) to ensure secure access to its functionalities.
 
+## Initial SetUp :-  please change the username and password  as per your sql configuration , in application.properties
+
+
 ## Project Overview
 
 The Library Management System offers a comprehensive solution for libraries or educational institutions to manage their collections and rental records effectively. With its user-friendly APIs, administrators can seamlessly perform administrative tasks, while users can conveniently browse and borrow books.
