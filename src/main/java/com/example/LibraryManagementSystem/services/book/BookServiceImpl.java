@@ -6,6 +6,7 @@ import com.example.LibraryManagementSystem.exception.AuthorNotFoundException;
 import com.example.LibraryManagementSystem.exception.BookNotFoundException;
 import com.example.LibraryManagementSystem.models.Author;
 import com.example.LibraryManagementSystem.models.Book;
+import com.example.LibraryManagementSystem.models.Rental;
 import com.example.LibraryManagementSystem.repository.AuthorRepository;
 import com.example.LibraryManagementSystem.repository.BookRepository;
 import com.example.LibraryManagementSystem.services.rental.RentalServiceImpl;
@@ -15,10 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -35,19 +33,17 @@ public class BookServiceImpl implements BookService{
     RentalServiceImpl rentalService;
 
     public BookResponseDto createBook(BookRequestDto bookRequestDto){
+        Author author = authorRepository.findById(bookRequestDto.getAuthorId()).orElseThrow(() -> new UsernameNotFoundException("Author Not found Exception"));
+
         // convert the RequestDto to Entity
         Book createdBook = BookTransformer.bookRequestDtoToBook(bookRequestDto);
-        Author author = authorRepository.findById(bookRequestDto.getAuthorId()).orElseThrow(() -> new UsernameNotFoundException("Author Not found Exception"));
-        createdBook.setAuthor(author);
         String isbn = String.valueOf(UUID.randomUUID()).substring(0,13);
         createdBook.setIsbn(isbn);
+        createdBook.setAuthor(author);
+
 
         // save the book in db
         Book savedBook = bookRepository.save(createdBook);
-
-        // after setting the book to author, the bookList in author needs to be updated as well
-        author.getBooks_written().add(createdBook);
-        authorRepository.save(author);
 
         // prepare the responseDto
         return BookTransformer.bookToBookResponseDto(savedBook);
@@ -70,7 +66,7 @@ public class BookServiceImpl implements BookService{
            // update the changed fields
            book.setTitle(bookRequestDto.getTitle());
            book.setPublicationYear(bookRequestDto.getPublicationYear());
-           if(bookRequestDto.getAuthorId() != null){  // change the author
+           if(bookRequestDto.getAuthorId() != null){  // change the author, we will not give the user to edit this
                // check if the author exists or not
                Author newAuthor = authorRepository.findById(bookRequestDto.getAuthorId()).orElseThrow(()-> new AuthorNotFoundException(Messages.AUTHOR_NOT_FOUND));
 
@@ -132,12 +128,12 @@ public class BookServiceImpl implements BookService{
     }
 
     public List<BookResponseDto> getAllRentedBooks(){
-        Set<Long> booksOnRent = rentalService.retrieveAllRentalRecords().stream().map(rentBookResponseDto -> rentBookResponseDto.getBookResponseDto().getId()).collect(Collectors.toSet());
         List<Book> bookList =  bookRepository.findAll();
 
         List<BookResponseDto> bookResponseDtoList = new ArrayList<>();
         for (Book book:bookList) {
-            if(booksOnRent.contains(book.getId())){
+            Optional<Rental> optionalRental = Optional.ofNullable(book.getRental());
+            if(optionalRental.isPresent()){
                 BookResponseDto bookResponseDto = BookTransformer.bookToBookResponseDto(book);
                 bookResponseDtoList.add(bookResponseDto);
             }

@@ -39,6 +39,10 @@ public class AuthorController {
         }
     }
 
+    /**
+     * We can pass the Dto(with fields to update) in the param as well ,
+     * but i tried to use this approach
+     * */
     @PutMapping("/updateById/{id}")  // update
     public ResponseEntity<String> updateAuthorById(@PathVariable("id") Long authorId,
                                                    @RequestParam(value = "name",required = false) String name,

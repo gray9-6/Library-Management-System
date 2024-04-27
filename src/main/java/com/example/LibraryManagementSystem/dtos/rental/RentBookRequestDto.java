@@ -14,5 +14,4 @@ import java.util.Date;
 public class RentBookRequestDto {
     Long bookId;
     String renterName;
-    Date rentalDate;
 }
